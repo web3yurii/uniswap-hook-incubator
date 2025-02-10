@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-import {BaseHook} from "v4-periphery/src/base/hooks/BaseHook.sol";
+import {BaseHook} from "v4-periphery/src/utils/BaseHook.sol";
 import {ERC20} from "solmate/src/tokens/ERC20.sol";
 
 import {CurrencyLibrary, Currency} from "v4-core/types/Currency.sol";
@@ -46,13 +46,13 @@ contract PointsHook is BaseHook, ERC20 {
         });
     }
 
-    function afterSwap(
+    function _afterSwap(
         address,
         PoolKey calldata key,
         IPoolManager.SwapParams calldata swapParams,
         BalanceDelta delta,
         bytes calldata hookData
-    ) external override onlyPoolManager returns (bytes4, int128) {
+    ) internal override onlyPoolManager returns (bytes4, int128) {
         // If this is not an ETH-TOKEN pool with this hook attached, ignore
         if (!key.currency0.isAddressZero()) return (this.afterSwap.selector, 0);
 
@@ -77,14 +77,14 @@ contract PointsHook is BaseHook, ERC20 {
         return (this.afterSwap.selector, 0);
     }
 
-    function afterAddLiquidity(
+    function _afterAddLiquidity(
         address,
         PoolKey calldata key,
         IPoolManager.ModifyLiquidityParams calldata,
         BalanceDelta delta,
         BalanceDelta,
         bytes calldata hookData
-    ) external override onlyPoolManager returns (bytes4, BalanceDelta) {
+    ) internal override returns (bytes4, BalanceDelta) {
         // If this is not an ETH-TOKEN pool with this hook attached, ignore
         if (!key.currency0.isAddressZero()) return (this.afterSwap.selector, delta);
 
