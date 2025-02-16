@@ -10,7 +10,5 @@ import {LPFeeLibrary} from "v4-core/libraries/LPFeeLibrary.sol";
 import {BeforeSwapDelta, BeforeSwapDeltaLibrary} from "v4-core/types/BeforeSwapDelta.sol";
 
 contract JITLiquidityHook is BaseHook {
-    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {
-        updateMovingAverage();
-    }
+    constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
 }
