@@ -11,4 +11,23 @@ import {BeforeSwapDelta, BeforeSwapDeltaLibrary} from "v4-core/types/BeforeSwapD
 
 contract JITLiquidityHook is BaseHook {
     constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
+
+    function getHookPermissions() public pure override returns (Hooks.Permissions memory) {
+        return Hooks.Permissions({
+            beforeInitialize: true, //TRUE
+            afterInitialize: true, //TRUE
+            beforeAddLiquidity: false,
+            beforeRemoveLiquidity: false,
+            afterAddLiquidity: true, //TRUE
+            afterRemoveLiquidity: true, //TRUE
+            beforeSwap: true, //TRUE
+            afterSwap: true, //TRUE
+            beforeDonate: false,
+            afterDonate: false,
+            beforeSwapReturnDelta: false,
+            afterSwapReturnDelta: false,
+            afterAddLiquidityReturnDelta: false,
+            afterRemoveLiquidityReturnDelta: false
+        });
+    }
 }
